@@ -1,0 +1,166 @@
+<div>
+  <div>
+    <h1>
+      List of all places
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new place
+    </h2>
+
+    <form action="/insert_place" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="image_box">
+          Image
+        </label>
+
+        <input type="text" id="image_box" name="query_image">
+      </div>
+
+      <div>
+        <label for="street_address_box">
+          Street address
+        </label>
+
+        <textarea id="street_address_box" name="query_street_address" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="city_box">
+          City
+        </label>
+
+        <textarea id="city_box" name="query_city" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="zip_code_box">
+          Zip code
+        </label>
+
+        <input type="text" id="zip_code_box" name="query_zip_code">
+      </div>
+
+      <button>
+        Create place
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Description
+        </th>
+
+        <th>
+          Image
+        </th>
+
+        <th>
+          Street address
+        </th>
+
+        <th>
+          City
+        </th>
+
+        <th>
+          Zip code
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_places.each do |a_place| %>
+      <tr>
+        <td>
+          <%= a_place.id %>
+        </td>
+
+        <td>
+          <%= a_place.name %>
+        </td>
+
+        <td>
+          <%= a_place.description %>
+        </td>
+
+        <td>
+          <%= a_place.image %>
+        </td>
+
+        <td>
+          <%= a_place.street_address %>
+        </td>
+
+        <td>
+          <%= a_place.city %>
+        </td>
+
+        <td>
+          <%= a_place.zip_code %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_place.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_place.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/places/<%= a_place.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
