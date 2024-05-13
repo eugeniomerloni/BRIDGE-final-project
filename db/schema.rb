@@ -10,5 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_13_042947) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "places", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image"
+    t.text "street_address"
+    t.text "city"
+    t.integer "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.text "first_name"
+    t.text "last_name"
+    t.date "dob"
+    t.text "hometown"
+    t.text "state"
+    t.text "email"
+    t.text "password_digest"
+    t.boolean "premium_subscription"
+  end
+
 end
