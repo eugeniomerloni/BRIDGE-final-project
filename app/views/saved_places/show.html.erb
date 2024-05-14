@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Saved place #<%= @the_saved_place.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/saved_places">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_saved_place/<%= @the_saved_place.id %>">
+          Delete saved place
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Place
+      </dt>
+      <dd>
+        <%= @the_saved_place.place_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_saved_place.user_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_saved_place.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_saved_place.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit saved place
+    </h2>
+
+    <form action="/modify_saved_place/<%= @the_saved_place.id %>"  method="post" >
+      <div>
+        <label for="place_id_box">
+          Place
+        </label>
+
+        <input type="text" id="place_id_box" name="query_place_id" value="<%= @the_saved_place.place_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_saved_place.user_id %>">
+      </div>
+
+      <button>
+        Update saved place
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

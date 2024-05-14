@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Place type #<%= @the_place_type.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/place_types">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_place_type/<%= @the_place_type.id %>">
+          Delete place type
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Place
+      </dt>
+      <dd>
+        <%= @the_place_type.place_id %>
+      </dd>
+
+      <dt>
+        Category
+      </dt>
+      <dd>
+        <%= @the_place_type.category_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_place_type.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_place_type.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit place type
+    </h2>
+
+    <form action="/modify_place_type/<%= @the_place_type.id %>"  method="post" >
+      <div>
+        <label for="place_id_box">
+          Place
+        </label>
+
+        <input type="text" id="place_id_box" name="query_place_id" value="<%= @the_place_type.place_id %>">
+      </div>
+
+      <div>
+        <label for="category_id_box">
+          Category
+        </label>
+
+        <input type="text" id="category_id_box" name="query_category_id" value="<%= @the_place_type.category_id %>">
+      </div>
+
+      <button>
+        Update place type
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
