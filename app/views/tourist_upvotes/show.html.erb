@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Tourist upvote #<%= @the_tourist_upvote.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/tourist_upvotes">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_tourist_upvote/<%= @the_tourist_upvote.id %>">
+          Delete tourist upvote
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Place
+      </dt>
+      <dd>
+        <%= @the_tourist_upvote.place_id %>
+      </dd>
+
+      <dt>
+        Tourist
+      </dt>
+      <dd>
+        <%= @the_tourist_upvote.tourist_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_tourist_upvote.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_tourist_upvote.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit tourist upvote
+    </h2>
+
+    <form action="/modify_tourist_upvote/<%= @the_tourist_upvote.id %>"  method="post" >
+      <div>
+        <label for="place_id_box">
+          Place
+        </label>
+
+        <input type="text" id="place_id_box" name="query_place_id" value="<%= @the_tourist_upvote.place_id %>">
+      </div>
+
+      <div>
+        <label for="tourist_id_box">
+          Tourist
+        </label>
+
+        <input type="text" id="tourist_id_box" name="query_tourist_id" value="<%= @the_tourist_upvote.tourist_id %>">
+      </div>
+
+      <button>
+        Update tourist upvote
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

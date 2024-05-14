@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_13_045322) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_14_061113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "follow_requests", force: :cascade do |t|
+    t.integer "recipient_id"
+    t.integer "sender_id"
+    t.boolean "accepted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "place_types", force: :cascade do |t|
+    t.integer "place_id"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "places", force: :cascade do |t|
     t.string "name"
@@ -21,6 +42,29 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_13_045322) do
     t.text "street_address"
     t.text "city"
     t.integer "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "place_id"
+    t.integer "reviewer_id"
+    t.float "rating"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "saved_places", force: :cascade do |t|
+    t.integer "place_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tourist_upvotes", force: :cascade do |t|
+    t.integer "place_id"
+    t.integer "tourist_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
