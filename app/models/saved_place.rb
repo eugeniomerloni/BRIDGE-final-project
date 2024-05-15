@@ -9,4 +9,8 @@
 #  user_id    :integer
 #
 class SavedPlace < ApplicationRecord
+
+  #Direct
+  belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
+  belongs_to :place, required: true, class_name: "Place", foreign_key: "place_id"
 end

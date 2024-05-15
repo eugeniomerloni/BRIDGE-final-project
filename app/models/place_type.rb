@@ -9,4 +9,9 @@
 #  place_id    :integer
 #
 class PlaceType < ApplicationRecord
+
+  #Direct
+  belongs_to :place, required: true, class_name: "Place", foreign_key: "place_id"
+  belongs_to :category, required: true, class_name: "Category", foreign_key: "category_id"
+  
 end
