@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
 
   # Routes for the Follow request resource:
 
@@ -152,7 +153,9 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  get("/", { :controller => "homepage", :action => "index" })
+  root to: "homepage#index"
+
+  # get("/", { :controller => "homepage", :action => "index" })
 
   # This is a blank app! Pick your first screen, build out the RCAV, and go from there. E.g.:
 
