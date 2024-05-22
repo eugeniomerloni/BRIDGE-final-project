@@ -48,10 +48,10 @@
       </dd>
 
       <dt>
-        Password digest
+        Encrypted Password
       </dt>
       <dd>
-        <%= @the_user.password_digest %>
+        <%= @the_user.encrypted_password %>
       </dd>
 
       <dt>
@@ -128,11 +128,11 @@
       </div>
 
       <div>
-        <label for="password_digest_box">
+        <label for="encrypted_password_box">
           Password digest
         </label>
 
-        <textarea id="password_digest_box" name="query_password_digest"><%= @the_user.password_digest %></textarea>
+        <textarea id="encrypted_password_box" name="query_encrypted_password"><%= @the_user.encrypted_password %></textarea>
       </div>
 
       <div>
