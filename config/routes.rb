@@ -62,6 +62,9 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_review", { :controller => "reviews", :action => "create" })
+
+    # CREATE FOR GIVEN PLACE ID
+    post("/insert_review/:place_id", { :controller => "reviews", :action => "create_w_place_id" })
           
   # READ
   get("/reviews", { :controller => "reviews", :action => "index" })
