@@ -35,6 +35,16 @@ class PlacesController < ApplicationController
   end
 
   def update
+    place_id = params.fetch("path_id")
+
+    matching_places = Place.where({ :id => place_id })
+
+    @the_place = matching_places.at(0)
+
+    render({ :template => "places/update" })
+  end
+
+  def modify
     the_id = params.fetch("path_id")
     the_place = Place.where({ :id => the_id }).at(0)
 

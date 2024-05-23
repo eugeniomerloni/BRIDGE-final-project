@@ -145,8 +145,10 @@ Rails.application.routes.draw do
   get("/places/:path_id", { :controller => "places", :action => "show" })
   
   # UPDATE
+
+  get("/update_place/:path_id", { :controller => "places", :action => "update" })
   
-  post("/modify_place/:path_id", { :controller => "places", :action => "update" })
+  post("/modify_place/:path_id", { :controller => "places", :action => "modify" })
   
   # DELETE
   get("/delete_place/:path_id", { :controller => "places", :action => "destroy" })
