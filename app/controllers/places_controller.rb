@@ -14,6 +14,19 @@ class PlacesController < ApplicationController
 
     @the_place = matching_places.at(0)
 
+    a = Array.new
+
+    @the_place.reviews.each do |a_review|
+
+      a.push(a_review.rating)
+
+    end
+
+    rating_sum = a.sum
+    rating_count = a.size
+    @rating_average = (rating_sum.to_f / rating_count).round(1)
+  
+
     render({ :template => "places/show" })
   end
 

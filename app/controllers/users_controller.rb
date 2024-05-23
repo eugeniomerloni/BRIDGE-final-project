@@ -41,9 +41,7 @@ class UsersController < ApplicationController
 
     the_user.first_name = params.fetch("query_first_name")
     the_user.last_name = params.fetch("query_last_name")
-    the_user.email = params.fetch("query_email")
     the_user.dob = params.fetch("query_dob")
-    the_user.encrypted_password = params.fetch("query_encrypted_password")
     the_user.premium_subscription = params.fetch("query_premium_subscription", false)
     the_user.hometown = params.fetch("query_hometown")
 
