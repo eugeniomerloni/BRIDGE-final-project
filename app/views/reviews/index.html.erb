@@ -7,8 +7,38 @@
 <% if current_user != nil %>
 
   <div>
+      <form id="flavor-form">
+
+      <div>
+          <label for="ice-cream-choice">Choose a flavor:</label>
+          <input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" required />
+          <datalist id="ice-cream-flavors">
+            <option value="Chocolate"></option>
+            <option value="Chocomilk"></option>
+            <option value="Coconut"></option>
+            <option value="Mint"></option>
+            <option value="Strawberry"></option>
+            <option value="Vanilla"></option>
+          </datalist>
+          <button type="submit">Submit</button>
+        </form>
+
+        <script>
+          document.getElementById('flavor-form').addEventListener('submit', function(event) {
+            var input = document.getElementById('ice-cream-choice');
+            var datalist = document.getElementById('ice-cream-flavors');
+            var valid = Array.from(datalist.options).some(option => option.value === input.value);
+            
+            if (!valid) {
+              alert('Please select a valid flavor from the list.');
+              event.preventDefault();
+            }
+          });
+        </script>
+      </div>
 
     <form action="/insert_review" method="post">
+
       <div>
         <label for="place_id_box">
           Place ID
