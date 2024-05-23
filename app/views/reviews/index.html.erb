@@ -7,18 +7,16 @@
 <% if current_user != nil %>
 
   <div>
-      <form id="flavor-form">
+
+    <form action="/insert_review" method="post">
 
       <div>
-          <label for="ice-cream-choice">Choose a flavor:</label>
-          <input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice" required />
-          <datalist id="ice-cream-flavors">
-            <option value="Chocolate"></option>
-            <option value="Chocomilk"></option>
-            <option value="Coconut"></option>
-            <option value="Mint"></option>
-            <option value="Strawberry"></option>
-            <option value="Vanilla"></option>
+          <label for="place_name_box">Choose a place to review:</label>
+          <input list="places_names" id="place_name_box" name="query_place_name" required />
+          <datalist id="places_names">
+            <% @place_names.each do |name| %>
+              <option value="<%= name %>"></option>
+            <% end %>
           </datalist>
           <button type="submit">Submit</button>
         </form>
@@ -37,15 +35,6 @@
         </script>
       </div>
 
-    <form action="/insert_review" method="post">
-
-      <div>
-        <label for="place_id_box">
-          Place ID
-        </label>
-
-        <input type="text" id="place_id_box" name="query_place_id">
-      </div>
 
       <div>
 

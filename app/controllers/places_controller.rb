@@ -4,6 +4,8 @@ class PlacesController < ApplicationController
 
     @list_of_places = matching_places.order({ :created_at => :desc })
 
+    @place_names = Place.pluck(:name)
+
     render({ :template => "places/index" })
   end
 

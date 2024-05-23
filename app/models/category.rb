@@ -9,6 +9,9 @@
 #
 class Category < ApplicationRecord
 
+  validates(:name, uniqueness: true)
+
+
   #DIrect
   has_many  :place_types, class_name: "PlaceType", foreign_key: "category_id", dependent: :destroy
 
