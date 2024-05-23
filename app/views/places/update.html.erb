@@ -1,0 +1,66 @@
+<h1>
+  Update <%= @the_place.name %>
+</h1>
+
+
+<div>
+  <div>
+    <h2>
+      Edit place
+    </h2>
+
+    <form action="/modify_place/<%= @the_place.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_place.name %>">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description"><%= @the_place.description %></textarea>
+      </div>
+
+      <div>
+        <label for="image_box">
+          Image
+        </label>
+
+        <input type="text" id="image_box" name="query_image" value="<%= @the_place.image %>">
+      </div>
+
+      <div>
+        <label for="street_address_box">
+          Street address
+        </label>
+
+        <textarea id="street_address_box" name="query_street_address"><%= @the_place.street_address %></textarea>
+      </div>
+
+      <div>
+        <label for="city_box">
+          City: <%= @the_place.city %>
+        </label>
+
+        <input type="hidden" id="city_box" name="query_city" value="<%= @the_place.city %>">
+      </div>
+
+      <div>
+        <label for="zip_code_box">
+          Zip code
+        </label>
+
+        <input type="text" id="zip_code_box" name="query_zip_code" value="<%= @the_place.zip_code %>">
+      </div>
+
+      <button>
+        Update place
+      </button>
+    </form>
+  </div>
+</div>

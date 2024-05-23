@@ -26,11 +26,12 @@ class ReviewsController < ApplicationController
 
     if the_review.valid?
       the_review.save
-      redirect_to("/reviews", { :notice => "Review created successfully." })
+      redirect_to("/places/#{the_review.place_id}", { :notice => "Review created successfully." })
     else
-      redirect_to("/reviews", { :alert => the_review.errors.full_messages.to_sentence })
+      redirect_to("/places/#{the_review.place_id}", { :alert => the_review.errors.full_messages.to_sentence })
     end
   end
+
 
   def update
     the_id = params.fetch("path_id")

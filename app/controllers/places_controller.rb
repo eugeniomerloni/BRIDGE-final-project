@@ -28,13 +28,23 @@ class PlacesController < ApplicationController
 
     if the_place.valid?
       the_place.save
-      redirect_to("/places", { :notice => "Place created successfully." })
+      redirect_to("/places/#{the_place.id}", { :notice => "Place created successfully." })
     else
-      redirect_to("/places", { :alert => the_place.errors.full_messages.to_sentence })
+      redirect_to("/places/#{the_place.id}", { :alert => the_place.errors.full_messages.to_sentence })
     end
   end
 
   def update
+    place_id = params.fetch("path_id")
+
+    matching_places = Place.where({ :id => place_id })
+
+    @the_place = matching_places.at(0)
+
+    render({ :template => "places/update" })
+  end
+
+  def modify
     the_id = params.fetch("path_id")
     the_place = Place.where({ :id => the_id }).at(0)
 

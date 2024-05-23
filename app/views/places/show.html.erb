@@ -1,13 +1,19 @@
 <div>
   <div>
     <h1>
-      Place #<%= @the_place.id %> details
+      <%= @the_place.name %> details
     </h1>
 
     <div>
       <div>
         <a href="/places">
           Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/update_place/<%= @the_place.id %>">
+          Edit place
         </a>
       </div>
 
@@ -19,12 +25,6 @@
     </div>
 
     <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_place.name %>
-      </dd>
 
       <dt>
         Description
@@ -61,86 +61,115 @@
         <%= @the_place.zip_code %>
       </dd>
 
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_place.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_place.updated_at) %> ago
-      </dd>
     </dl>
   </div>
 </div>
 
+
+
 <hr>
 
+<% if current_user != nil %>
 
-<div>
   <div>
     <h2>
-      Edit place
+      Add a new review
     </h2>
 
-    <form action="/modify_place/<%= @the_place.id %>"  method="post" >
+    <form action="/insert_review" method="post">
       <div>
-        <label for="name_box">
-          Name
-        </label>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_place.name %>">
+        <input type="hidden" id="place_id_box" name="query_place_id" value="<%= @the_place.id %>">
       </div>
 
       <div>
-        <label for="description_box">
-          Description
-        </label>
 
-        <textarea id="description_box" name="query_description"><%= @the_place.description %></textarea>
+        <input type="hidden" id="reviewer_id_box" name="query_reviewer_id" value="<%= current_user.id %>">
       </div>
 
       <div>
-        <label for="image_box">
-          Image
+        <label for="rating_box">
+          Rating
         </label>
 
-        <input type="text" id="image_box" name="query_image" value="<%= @the_place.image %>">
+        <input type="text" id="rating_box" name="query_rating">
       </div>
 
       <div>
-        <label for="street_address_box">
-          Street address
+        <label for="body_box">
+          Body
         </label>
 
-        <textarea id="street_address_box" name="query_street_address"><%= @the_place.street_address %></textarea>
-      </div>
-
-      <div>
-        <label for="city_box">
-          City
-        </label>
-
-        <textarea id="city_box" name="query_city"><%= @the_place.city %></textarea>
-      </div>
-
-      <div>
-        <label for="zip_code_box">
-          Zip code
-        </label>
-
-        <input type="text" id="zip_code_box" name="query_zip_code" value="<%= @the_place.zip_code %>">
+        <textarea id="body_box" name="query_body" rows="3"></textarea>
       </div>
 
       <button>
-        Update place
+        Create review
       </button>
     </form>
   </div>
-</div>
 
-<hr>
+
+  <% else %>
+
+  <div>
+  Want to add a review?
+
+  <a href="/users/sign_up">Sign up</a>
+  <a href="/users/sign_in">Sign in</a>
+
+  </div>
+
+  <% end %>
+
+
+
+
+<h2>Existing reviews for <%= @the_place.name %></h2>
+
+<table border="1">
+  <tr>
+
+    <th>
+      Reviewer
+    </th>
+
+    <th>
+      Rating
+    </th>
+
+    <th>
+      Description
+    </th>
+
+    <th>
+      Date
+    </th>
+
+  </tr>
+
+  <% @the_place.reviews.each do |a_review| %>
+    <tr>
+      <td>
+        <% the_id = a_review.reviewer_id  %>
+        <% matching_records = User.where({ :id => the_id}) %>
+        <% reviewer = matching_records.at(0) %>
+
+        <%= reviewer.full_name %>
+      </td>
+
+      <td>
+        <%= a_review.rating %>
+      </td>
+
+      <td>
+        <%= a_review.body %>
+      </td>
+
+      <td>
+        <%= a_review.created_at.to_date%>
+      </td>
+
+    </tr>
+  <% end %>
+</table>
