@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+ .custom-navbar {
+  background-color: #ff6347; /* Custom background color */
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link,
+.custom-navbar .navbar-toggler-icon {
+  color: white; /* Custom text color */
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link:focus {
+  color: #ffcccb; /* Custom hover color */
+}
