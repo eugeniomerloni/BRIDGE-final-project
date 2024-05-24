@@ -14,7 +14,7 @@
       Add a new place in <%= current_user.hometown %>
     </h2>
 
-    <form action="/insert_place" method="post">
+    <form action="/insert_place" method="post" class="form-horizontal" enctype="multipart/form-data">
       <div>
         <label for="name_box">
           Name
@@ -33,7 +33,7 @@
         <label for="image_box">
           Image
         </label>
-        <input type="text" id="image_box" name="query_image">
+        <input type="file" id="image_box" name="query_image" class="form-control">
       </div>
 
       <div>

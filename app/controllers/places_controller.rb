@@ -55,6 +55,8 @@ class PlacesController < ApplicationController
     else
       redirect_to("/places/#{the_place.id}", { alert: the_place.errors.full_messages.to_sentence })
     end
+
+  
   end
 
 

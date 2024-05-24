@@ -76,14 +76,14 @@
       <dd>
         <%= @the_place.description %>
       </dd>
-
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <%= @the_place.image %>
-      </dd>
-
+      <dt class="col-sm-3">Image</dt>
+        <dd class="col-sm-9">
+          <% if @the_place.image.present? %>
+            <img src="<%= @the_place.image.url %>" class="img-fluid" alt="<%= @the_place.name %>">
+          <% else %>
+            <p>No image available.</p>
+          <% end %>
+        </dd>
       <dt>
         Street address
       </dt>
