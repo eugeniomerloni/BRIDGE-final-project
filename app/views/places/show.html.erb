@@ -1,8 +1,48 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range Input with Tick Mark Labels</title>
+    <style>
+        .range-container {
+            position: relative;
+            width: 300px; /* Adjust based on your range input width */
+            margin: 20px;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            width: 100%;
+            top: 40px; /* Adjust this value to move the labels up or down */
+            left: 0;
+        }
+
+        .range-labels span {
+            position: absolute;
+            transform: translateX(-50%);
+        }
+
+        /* Style the range input for better visibility */
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+
+
+
 <div>
   <div>
     <h1>
-      <%= @the_place.name %> details
+      <%= @the_place.name %> 
     </h1>
+
+    <h2>
+      <% @the_place.categories.all.each do |category| %>
+        <%= category.name %>
+      <% end %>
+    </h2>
 
     <h2>
     Overall rating: <%= @rating_average %>/5.0
@@ -73,7 +113,7 @@
 
 <hr>
 
-<% if current_user != nil %>
+<% if current_user != nil && current_user.hometown == @the_place.city %>
 
   <div>
     <h2>
@@ -91,21 +131,32 @@
         <input type="hidden" id="reviewer_id_box" name="query_reviewer_id" value="<%= current_user.id %>">
       </div>
 
-      <div>
-          <label for="rating_box">Choose a rating:</label>
-            <select name="query_rating" id="rating_box">
-              <option value="1.0">1.0</option>
-              <option value="1.5">1.5</option>
-              <option value="2.0">2.0</option>
-              <option value="2.5">2.5</option>
-              <option value="3.0">3.0</option>
-              <option value="3.5">3.5</option>
-              <option value="4.0">4.0</option>
-              <option value="4.5">4.5</option>
-              <option value="5.0">5.0</option>
-            </select>
-            <br><br>
+      <div class="range-container">
+        <label for="rating_box">Rating</label>
+          <input type="range" list="tickmarks" step="0.5" min="1.0" max="5.0" id="rating_box" name="query_rating" />
+          <datalist id="tickmarks">
+            <option value="1.0"></option>
+            <option value="1.5"></option>
+            <option value="2.0"></option>
+            <option value="2.5"></option>
+            <option value="3.0"></option>
+            <option value="3.5"></option>
+            <option value="4.0"></option>
+            <option value="4.5"></option>
+            <option value="5.0"></option>
+          </datalist>
 
+          <div class="range-labels">
+            <span style="left: 0%;">1.0</span>
+            <span style="left: 12.5%;">1.5</span>
+            <span style="left: 25%;">2.0</span>
+            <span style="left: 37.5%;">2.5</span>
+            <span style="left: 50%;">3.0</span>
+            <span style="left: 62.5%;">3.5</span>
+            <span style="left: 75%;">4.0</span>
+            <span style="left: 87.5%;">4.5</span>
+            <span style="left: 100%;">5.0</span>
+          </div>
       </div>
 
       <div>
@@ -123,6 +174,11 @@
   </div>
 
 
+  <% elsif current_user != nil && current_user.hometown != @the_place.city  %>
+
+  You can only add reviews for places in <%= current_user.hometown %>
+  
+  
   <% else %>
 
   <div>
@@ -135,7 +191,7 @@
 
   <% end %>
 
-
+<hr>
 
 
 <h2>Existing reviews for <%= @the_place.name %></h2>

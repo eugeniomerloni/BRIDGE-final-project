@@ -24,11 +24,19 @@ class ReviewsController < ApplicationController
   def create
     the_review = Review.new
 
-    place_name = params.fetch("query_place_name")
-    matching_places = Place.where({ :name => place_name})
-    the_place = matching_places.at(0)
+    if params.fetch("query_place_id") != nil
+      the_review.place_id = params.fetch("query_place_id")
 
-    the_review.place_id = the_place.id
+    else
+
+      place_name = params.fetch("query_place_name")
+      matching_places = Place.where({ :name => place_name})
+      the_place = matching_places.at(0)
+
+      the_review.place_id = the_place.id
+
+    end
+
     the_review.reviewer_id = params.fetch("query_reviewer_id")
     the_review.rating = params.fetch("query_rating")
     the_review.body = params.fetch("query_body")
