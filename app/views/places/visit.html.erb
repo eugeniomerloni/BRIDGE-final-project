@@ -1,0 +1,8 @@
+<h1> Top <%= @chosen_category %>s in <%= @chosen_city %> </h1>
+
+<ul>
+<% @places_in_category_city.each do |place| %>
+  <li> <a href="/places/<%= place.id %>"> <%= place.name %> </a> </li>
+  <% end %>
+
+</ul>

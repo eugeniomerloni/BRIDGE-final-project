@@ -157,6 +157,8 @@ Rails.application.routes.draw do
 
   #------------------------------
 
+  get("/:city/:category", { :controller => "places", :action => "visit" })
+
   root to: "homepage#index"
 
   # get("/", { :controller => "homepage", :action => "index" })

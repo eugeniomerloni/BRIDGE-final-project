@@ -6,6 +6,8 @@ class PlacesController < ApplicationController
 
     @place_names = Place.pluck(:name)
 
+    @list_of_categories = Category.all
+
     render({ :template => "places/index" })
   end
 
@@ -43,11 +45,19 @@ class PlacesController < ApplicationController
 
     if the_place.valid?
       the_place.save
-      redirect_to("/places/#{the_place.id}", { :notice => "Place created successfully." })
+
+      category_ids = params.fetch("categories", [])
+      category_ids.each do |category_id|
+        create_place_type(the_place.id, category_id)
+      end
+
+      redirect_to("/places/#{the_place.id}", { notice: "Place created successfully." })
     else
-      redirect_to("/places/#{the_place.id}", { :alert => the_place.errors.full_messages.to_sentence })
+      redirect_to("/places/#{the_place.id}", { alert: the_place.errors.full_messages.to_sentence })
     end
   end
+
+
 
   def update
     place_id = params.fetch("path_id")
@@ -86,4 +96,26 @@ class PlacesController < ApplicationController
 
     redirect_to("/places", { :notice => "Place deleted successfully."} )
   end
+
+  def visit
+
+    @chosen_city = params.fetch("city")
+    @chosen_category = params.fetch("category")
+
+    matching_categories = Category.where({ :name => @chosen_category})
+    @the_category = matching_categories.at(0)
+
+    @places_in_category = @the_category.places
+    @places_in_category_city = @places_in_category.where({ :city => @chosen_city})
+
+    render({ :template => "places/visit" })
+
+  end
+
+  private
+
+  def create_place_type(place_id, category_id)
+    PlaceType.create(place_id: place_id, category_id: category_id)
+  end
+
 end
