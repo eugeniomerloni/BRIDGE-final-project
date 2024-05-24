@@ -19,7 +19,6 @@
         <label for="name_box">
           Name
         </label>
-
         <input type="text" id="name_box" name="query_name">
       </div>
 
@@ -27,7 +26,6 @@
         <label for="description_box">
           Description
         </label>
-
         <textarea id="description_box" name="query_description" rows="3"></textarea>
       </div>
 
@@ -35,15 +33,23 @@
         <label for="image_box">
           Image
         </label>
-
         <input type="text" id="image_box" name="query_image">
+      </div>
+
+      <div>
+          <label>Select Categories</label>
+          <div class="checkbox-group">
+            <% Category.all.each do |category| %>
+              <input type="checkbox" id="categories_<%= category.id %>" name="categories[]" value="<%= category.id %>">
+              <label for="categories_<%= category.id %>"><%= category.name %></label>
+            <% end %>
+          </div>
       </div>
 
       <div>
         <label for="street_address_box">
           Street address
         </label>
-
         <textarea id="street_address_box" name="query_street_address" rows="3"></textarea>
       </div>
 
@@ -51,7 +57,6 @@
         <label for="city_box">
           City: <%= current_user.hometown %>
         </label>
-
         <input type="hidden" id="city_box" name="query_city" value="<%= current_user.hometown %>">
       </div>
 
@@ -59,11 +64,10 @@
         <label for="zip_code_box">
           Zip code
         </label>
-
         <input type="text" id="zip_code_box" name="query_zip_code">
       </div>
 
-      <button>
+      <button type="submit">
         Create place
       </button>
     </form>
