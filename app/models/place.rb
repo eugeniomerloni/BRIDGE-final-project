@@ -14,6 +14,8 @@
 #
 class Place < ApplicationRecord
 
+  validates(:name, uniqueness: true)
+
 #Direct Associations
 has_many  :reviews, class_name: "Review", foreign_key: "place_id", dependent: :destroy
 has_many  :place_types, class_name: "PlaceType", foreign_key: "place_id", dependent: :destroy

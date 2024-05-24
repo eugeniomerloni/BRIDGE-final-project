@@ -1,6 +1,35 @@
 <h1>Welcome to Bridge!</h1>
 
+<h3>What city do you want to explore?</h3>
+
+<form action="/categories/<%= @chosen_city %>" method="get" id="city_choice_form">
+
+  <div>
+      <label for="city_box">Search:</label>
+      <input list="cities" id="city_box" name="query_city" required />
+      <datalist id="cities">
+        <% @hometowns.each do |hometown| %>
+          <option value="<%= hometown %>"></option>
+        <% end %>
+      </datalist>
+    <button type="submit">Submit</button>
+</form>
+
+
+    <script>
+      document.getElementById('city_choice_form').addEventListener('submit', function(event) {
+        var input = document.getElementById('city_box');
+        var datalist = document.getElementById('cities');
+        var valid = Array.from(datalist.options).some(option => option.value === input.value);
+        
+        if (!valid) {
+          alert('Please select a valid city from the list.');
+          event.preventDefault();
+        }
+      });
+    </script>
+  </div>
+
 <a href="/users">All Users</a>
 <a href="/places">All Places</a>
 <a href="/categories">All Categories</a>
-
