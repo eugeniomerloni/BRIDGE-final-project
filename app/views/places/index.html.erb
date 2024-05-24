@@ -1,170 +1,112 @@
-<div>
-  <div>
-    <h1>
-      List of all places
-    </h1>
-  </div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add a new place</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-<hr>
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-<div>
-  <div>
-    <h2>
-      Add a new place in <%= current_user.hometown %>
-    </h2>
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-    <form action="/insert_place" method="post">
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-        <input type="text" id="name_box" name="query_name">
+    .btn-pretty {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+
+    .btn-pretty:hover {
+      background-color: #218838;
+    }
+
+    h1, label {
+      text-align: center;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    .checkbox-group label {
+      margin-right: 15px;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"], textarea, input[type="file"] {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Add a new place in <%= current_user.hometown %></h1>
+    <form action="/insert_place" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name_box">Name</label>
+        <input type="text" id="name_box" name="query_name" class="form-control">
       </div>
 
-      <div>
-        <label for="description_box">
-          Description
-        </label>
-        <textarea id="description_box" name="query_description" rows="3"></textarea>
+      <div class="form-group">
+        <label for="description_box">Description</label>
+        <textarea id="description_box" name="query_description" rows="3" class="form-control"></textarea>
       </div>
 
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-        <input type="text" id="image_box" name="query_image">
+      <div class="form-group">
+        <label for="image_box">Image</label>
+        <input type="file" id="image_box" name="query_image" class="form-control">
       </div>
 
-      <div>
-          <label>Select Categories</label>
-          <div class="checkbox-group">
-            <% Category.all.each do |category| %>
-              <input type="checkbox" id="categories_<%= category.id %>" name="categories[]" value="<%= category.id %>">
-              <label for="categories_<%= category.id %>"><%= category.name %></label>
-            <% end %>
-          </div>
+      <div class="form-group">
+        <label>Select Categories</label>
+        <div class="checkbox-group">
+          <% Category.all.each do |category| %>
+            <input type="checkbox" id="categories_<%= category.id %>" name="categories[]" value="<%= category.id %>">
+            <label for="categories_<%= category.id %>"><%= category.name %></label>
+          <% end %>
+        </div>
       </div>
 
-      <div>
-        <label for="street_address_box">
-          Street address
-        </label>
-        <textarea id="street_address_box" name="query_street_address" rows="3"></textarea>
+      <div class="form-group">
+        <label for="street_address_box">Street address</label>
+        <textarea id="street_address_box" name="query_street_address" rows="3" class="form-control"></textarea>
       </div>
 
-      <div>
-        <label for="city_box">
-          City: <%= current_user.hometown %>
-        </label>
+      <div class="form-group">
+        <label for="city_box">City: <%= current_user.hometown %></label>
         <input type="hidden" id="city_box" name="query_city" value="<%= current_user.hometown %>">
       </div>
 
-      <div>
-        <label for="zip_code_box">
-          Zip code
-        </label>
-        <input type="text" id="zip_code_box" name="query_zip_code">
+      <div class="form-group">
+        <label for="zip_code_box">Zip code</label>
+        <input type="text" id="zip_code_box" name="query_zip_code" class="form-control">
       </div>
 
-      <button type="submit">
-        Create place
-      </button>
+      <button type="submit" class="btn-pretty">Create place</button>
     </form>
   </div>
-</div>
 
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Image
-        </th>
-
-        <th>
-          Street address
-        </th>
-
-        <th>
-          City
-        </th>
-
-        <th>
-          Zip code
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_places.each do |a_place| %>
-      <tr>
-        <td>
-          <%= a_place.id %>
-        </td>
-
-        <td>
-          <%= a_place.name %>
-        </td>
-
-        <td>
-          <%= a_place.description %>
-        </td>
-
-        <td>
-          <%= a_place.image %>
-        </td>
-
-        <td>
-          <%= a_place.street_address %>
-        </td>
-
-        <td>
-          <%= a_place.city %>
-        </td>
-
-        <td>
-          <%= a_place.zip_code %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_place.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_place.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/places/<%= a_place.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
-<hr>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

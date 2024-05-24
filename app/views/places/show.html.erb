@@ -1,244 +1,260 @@
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Range Input with Tick Mark Labels</title>
-    <style>
-        .range-container {
-            position: relative;
-            width: 300px; /* Adjust based on your range input width */
-            margin: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Details</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-        .range-labels {
-            display: flex;
-            justify-content: space-between;
-            position: absolute;
-            width: 100%;
-            top: 40px; /* Adjust this value to move the labels up or down */
-            left: 0;
-        }
+  <style>
+    .range-container {
+      position: relative;
+      width: 300px; /* Adjust based on your range input width */
+      margin: 20px auto; /* Centered */
+    }
 
-        .range-labels span {
-            position: absolute;
-            transform: translateX(-50%);
-        }
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      width: 100%;
+      top: 40px; /* Adjust this value to move the labels up or down */
+      left: 0;
+    }
 
-        /* Style the range input for better visibility */
-        input[type="range"] {
-            width: 100%;
-        }
-    </style>
+    .range-labels span {
+      position: absolute;
+      transform: translateX(-50%);
+    }
+
+    /* Style the range input for better visibility */
+    input[type="range"] {
+      width: 100%;
+      background-color: #28a745;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .category-box {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    .btn-pretty {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-pretty:hover {
+      background-color: #218838;
+    }
+
+    .reviews-table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+
+    .reviews-table th, .reviews-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    .reviews-table th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+
+    .reviews-table td {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+
+
+    .btn-toolbar {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-toolbar .btn-group {
+      margin-top: 10px;
+    }
+
+    .top-buttons {
+      margin-bottom: 20px;
+    }
+
+    .review-form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .review-form textarea {
+      width: 100%;
+      max-width: 100%;
+    }
+
+  </style>
 </head>
-
-
-
-<div>
-  <div>
-    <h1>
-      <%= @the_place.name %> 
-    </h1>
-
-    <h2>
-      <% @the_place.categories.all.each do |category| %>
-        <%= category.name %>
-      <% end %>
-    </h2>
-
-    <h2>
-    Overall rating: <%= @rating_average %>/5.0
-    </h2>
-
-    <div>
-      <div>
-        <a href="/places">
-          Go back
-        </a>
+<body>
+  <div class="container mt-5">
+    <div class="btn-toolbar top-buttons">
+      <div class="btn-group">
+        <a href="/places" class="btn btn-secondary">Go back</a>
       </div>
-
-      <div>
-        <a href="/update_place/<%= @the_place.id %>">
-          Edit place
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_place/<%= @the_place.id %>">
-          Delete place
-        </a>
+      <div class="btn-group">
+        <a href="/update_place/<%= @the_place.id %>" class="btn btn-warning">Edit place</a>
+        <a href="/delete_place/<%= @the_place.id %>" class="btn btn-danger">Delete place</a>
       </div>
     </div>
 
-    <dl>
+    <div class="centered">
+      <h1><%= @the_place.name %></h1>
 
-      <dt>
-        Description
-      </dt>
-      <dd>
-        <%= @the_place.description %>
-      </dd>
-
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <%= @the_place.image %>
-      </dd>
-
-      <dt>
-        Street address
-      </dt>
-      <dd>
-        <%= @the_place.street_address %>
-      </dd>
-
-      <dt>
-        City
-      </dt>
-      <dd>
-        <%= @the_place.city %>
-      </dd>
-
-      <dt>
-        Zip code
-      </dt>
-      <dd>
-        <%= @the_place.zip_code %>
-      </dd>
-
-    </dl>
-  </div>
-</div>
-
-
-
-<hr>
-
-<% if current_user != nil && current_user.hometown == @the_place.city %>
-
-  <div>
-    <h2>
-      Add a new review
-    </h2>
-
-    <form action="/insert_review" method="post">
-      <div>
-
-        <input type="hidden" id="place_id_box" name="query_place_id" value="<%= @the_place.id %>">
-      </div>
-
-      <div>
-
-        <input type="hidden" id="reviewer_id_box" name="query_reviewer_id" value="<%= current_user.id %>">
-      </div>
-
-      <div class="range-container">
-        <label for="rating_box">Rating</label>
-          <input type="range" list="tickmarks" step="0.5" min="1.0" max="5.0" id="rating_box" name="query_rating" />
-          <datalist id="tickmarks">
-            <option value="1.0"></option>
-            <option value="1.5"></option>
-            <option value="2.0"></option>
-            <option value="2.5"></option>
-            <option value="3.0"></option>
-            <option value="3.5"></option>
-            <option value="4.0"></option>
-            <option value="4.5"></option>
-            <option value="5.0"></option>
-          </datalist>
-
-          <div class="range-labels">
-            <span style="left: 0%;">1.0</span>
-            <span style="left: 12.5%;">1.5</span>
-            <span style="left: 25%;">2.0</span>
-            <span style="left: 37.5%;">2.5</span>
-            <span style="left: 50%;">3.0</span>
-            <span style="left: 62.5%;">3.5</span>
-            <span style="left: 75%;">4.0</span>
-            <span style="left: 87.5%;">4.5</span>
-            <span style="left: 100%;">5.0</span>
+      <div class="categories">
+        <% @the_place.categories.all.each do |category| %>
+          <div class="category-box">
+            <%= category.name %>
           </div>
+        <% end %>
       </div>
 
-      <div>
-        <label for="body_box">
-          Body
-        </label>
+      <h2>Overall rating: <%= @rating_average %>/5.0</h2>
+    </div>
 
-        <textarea id="body_box" name="query_body" rows="3"></textarea>
+    <dl class="dl-horizontal">
+      <dt>Description</dt>
+      <dd><%= @the_place.description %></dd>
+
+      <dt>Image</dt>
+      <dd>
+        <% if @the_place.image.present? %>
+          <img src="<%= @the_place.image.url %>" class="img-fluid" alt="<%= @the_place.name %>">
+        <% else %>
+          <p>No image available.</p>
+        <% end %>
+      </dd>
+
+      <dt>Street address</dt>
+      <dd><%= @the_place.street_address %></dd>
+
+      <dt>City</dt>
+      <dd><%= @the_place.city %></dd>
+
+      <dt>Zip code</dt>
+      <dd><%= @the_place.zip_code %></dd>
+    </dl>
+
+    <hr>
+
+    <% if current_user != nil && current_user.hometown == @the_place.city %>
+      <div class="centered">
+        <h2>Add a new review</h2>
+
+        <form action="/insert_review" method="post" class="review-form">
+          <input type="hidden" id="place_id_box" name="query_place_id" value="<%= @the_place.id %>">
+          <input type="hidden" id="reviewer_id_box" name="query_reviewer_id" value="<%= current_user.id %>">
+
+          <div class="form-group range-container">
+            <label for="rating_box">Rating</label>
+            <input type="range" list="tickmarks" step="0.5" min="1.0" max="5.0" id="rating_box" name="query_rating">
+            <datalist id="tickmarks">
+              <option value="1.0"></option>
+              <option value="1.5"></option>
+              <option value="2.0"></option>
+              <option value="2.5"></option>
+              <option value="3.0"></option>
+              <option value="3.5"></option>
+              <option value="4.0"></option>
+              <option value="4.5"></option>
+              <option value="5.0"></option>
+            </datalist>
+            <div class="range-labels">
+              <span style="left: 0%;">1.0</span>
+              <span style="left: 12.5%;">1.5</span>
+              <span style="left: 25%;">2.0</span>
+              <span style="left: 37.5%;">2.5</span>
+              <span style="left: 50%;">3.0</span>
+              <span style="left: 62.5%;">3.5</span>
+              <span style="left: 75%;">4.0</span>
+              <span style="left: 87.5%;">4.5</span>
+              <span style="left: 100%;">5.0</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="body_box">Body</label>
+            <textarea id="body_box" name="query_body" rows="2" class="form-control"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn-pretty">Create review</button>
+          </div>
+        </form>
       </div>
+    <% elsif current_user != nil && current_user.hometown != @the_place.city %>
+      <p class="centered">You can only add reviews for places in <%= current_user.hometown %></p>
+    <% else %>
+      <div class="centered">
+        <p>Want to add a review?</p>
+        <a href="/users/sign_up">Sign up</a>
+        <a href="/users/sign_in">Sign in</a>
+      </div>
+    <% end %>
 
-      <button>
-        Create review
-      </button>
-    </form>
+    <hr>
+
+    <h2 class="centered">Existing reviews for <%= @the_place.name %></h2>
+
+    <table class="reviews-table table table-bordered">
+      <thead>
+        <tr>
+          <th>Reviewer</th>
+          <th>Rating</th>
+          <th>Description</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @the_place.reviews.each do |a_review| %>
+          <tr>
+            <td>
+              <% the_id = a_review.reviewer_id %>
+              <% matching_records = User.where({ id: the_id }) %>
+              <% reviewer = matching_records.at(0) %>
+              <%= reviewer.full_name %>
+            </td>
+            <td><%= a_review.rating %></td>
+            <td><%= a_review.body %></td>
+            <td><%= a_review.created_at.to_date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
-
-  <% elsif current_user != nil && current_user.hometown != @the_place.city  %>
-
-  You can only add reviews for places in <%= current_user.hometown %>
-  
-  
-  <% else %>
-
-  <div>
-  Want to add a review?
-
-  <a href="/users/sign_up">Sign up</a>
-  <a href="/users/sign_in">Sign in</a>
-
-  </div>
-
-  <% end %>
-
-<hr>
-
-
-<h2>Existing reviews for <%= @the_place.name %></h2>
-
-<table border="1">
-  <tr>
-
-    <th>
-      Reviewer
-    </th>
-
-    <th>
-      Rating
-    </th>
-
-    <th>
-      Description
-    </th>
-
-    <th>
-      Date
-    </th>
-
-  </tr>
-
-  <% @the_place.reviews.each do |a_review| %>
-    <tr>
-      <td>
-        <% the_id = a_review.reviewer_id  %>
-        <% matching_records = User.where({ :id => the_id}) %>
-        <% reviewer = matching_records.at(0) %>
-
-        <%= reviewer.full_name %>
-      </td>
-
-      <td>
-        <%= a_review.rating %>
-      </td>
-
-      <td>
-        <%= a_review.body %>
-      </td>
-
-      <td>
-        <%= a_review.created_at.to_date%>
-      </td>
-
-    </tr>
-  <% end %>
-</table>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
