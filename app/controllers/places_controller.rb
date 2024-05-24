@@ -68,25 +68,27 @@ class PlacesController < ApplicationController
 
     @the_place = matching_places.at(0)
 
+
     render({ :template => "places/update" })
   end
 
   def modify
     the_id = params.fetch("path_id")
-    the_place = Place.where({ :id => the_id }).at(0)
+    @the_place = Place.where({ :id => the_id }).at(0)
 
-    the_place.name = params.fetch("query_name")
-    the_place.description = params.fetch("query_description")
-    the_place.image = params.fetch("query_image")
-    the_place.street_address = params.fetch("query_street_address")
-    the_place.city = params.fetch("query_city")
-    the_place.zip_code = params.fetch("query_zip_code")
+    @the_place.name = params.fetch("query_name")
+    @the_place.description = params.fetch("query_description")
+    @the_place.image = params.fetch("query_image")
+    @the_place.street_address = params.fetch("query_street_address")
+    @the_place.city = params.fetch("query_city")
+    @the_place.zip_code = params.fetch("query_zip_code")
 
-    if the_place.valid?
-      the_place.save
-      redirect_to("/places/#{the_place.id}", { :notice => "Place updated successfully."} )
+
+    if @the_place.valid?
+      @the_place.save
+      redirect_to("/places/#{@the_place.id}", { :notice => "Place updated successfully."} )
     else
-      redirect_to("/places/#{the_place.id}", { :alert => the_place.errors.full_messages.to_sentence })
+      redirect_to("/places/#{@the_place.id}", { :alert => @the_place.errors.full_messages.to_sentence })
     end
   end
 
