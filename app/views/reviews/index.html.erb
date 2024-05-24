@@ -1,3 +1,37 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range Input with Tick Mark Labels</title>
+    <style>
+        .range-container {
+            position: relative;
+            width: 300px; /* Adjust based on your range input width */
+            margin: 20px;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            width: 100%;
+            top: 40px; /* Adjust this value to move the labels up or down */
+            left: 0;
+        }
+
+        .range-labels span {
+            position: absolute;
+            transform: translateX(-50%);
+        }
+
+        /* Style the range input for better visibility */
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+
+
+
 <div>
   <div>
     <h1>
@@ -8,27 +42,26 @@
 
   <div>
 
-    <form action="/insert_review" method="post">
+    <form action="/insert_review" method="post" id="new_review_form">
 
       <div>
           <label for="place_name_box">Choose a place to review:</label>
           <input list="places_names" id="place_name_box" name="query_place_name" required />
           <datalist id="places_names">
-            <% @place_names.each do |name| %>
-              <option value="<%= name %>"></option>
+            <% @places_in_hometown.each do |place| %>
+              <option value="<%= place.name %>"></option>
             <% end %>
           </datalist>
-          <button type="submit">Submit</button>
-        </form>
+
 
         <script>
-          document.getElementById('flavor-form').addEventListener('submit', function(event) {
-            var input = document.getElementById('ice-cream-choice');
-            var datalist = document.getElementById('ice-cream-flavors');
+          document.getElementById('new_review_form').addEventListener('submit', function(event) {
+            var input = document.getElementById('place_name_box');
+            var datalist = document.getElementById('places_names');
             var valid = Array.from(datalist.options).some(option => option.value === input.value);
             
             if (!valid) {
-              alert('Please select a valid flavor from the list.');
+              alert('Please select a valid place from the list.');
               event.preventDefault();
             }
           });
@@ -41,12 +74,32 @@
         <input type="hidden" id="reviewer_id_box" name="query_reviewer_id" value="<%= current_user.id %>">
       </div>
 
-      <div>
-        <label for="rating_box">
-          Rating
-        </label>
+      <div class="range-container">
+        <label for="rating_box">Rating</label>
+          <input type="range" list="tickmarks" step="0.5" min="1.0" max="5.0" id="rating_box" name="query_rating" />
+          <datalist id="tickmarks">
+            <option value="1.0"></option>
+            <option value="1.5"></option>
+            <option value="2.0"></option>
+            <option value="2.5"></option>
+            <option value="3.0"></option>
+            <option value="3.5"></option>
+            <option value="4.0"></option>
+            <option value="4.5"></option>
+            <option value="5.0"></option>
+          </datalist>
 
-        <input type="text" id="rating_box" name="query_rating">
+          <div class="range-labels">
+            <span style="left: 0%;">1.0</span>
+            <span style="left: 12.5%;">1.5</span>
+            <span style="left: 25%;">2.0</span>
+            <span style="left: 37.5%;">2.5</span>
+            <span style="left: 50%;">3.0</span>
+            <span style="left: 62.5%;">3.5</span>
+            <span style="left: 75%;">4.0</span>
+            <span style="left: 87.5%;">4.5</span>
+            <span style="left: 100%;">5.0</span>
+          </div>
       </div>
 
       <div>

@@ -4,6 +4,8 @@ class ReviewsController < ApplicationController
 
     @list_of_reviews = matching_reviews.order({ :created_at => :desc })
 
+    @places_in_hometown = Place.where({ :city => current_user.hometown})
+
     @place_names = Place.pluck(:name)
 
     render({ :template => "reviews/index" })
