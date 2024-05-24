@@ -4,6 +4,8 @@ class CategoriesController < ApplicationController
 
     @list_of_categories = matching_categories.order({ :created_at => :desc })
 
+    @chosen_city = params[:query_city]
+
     render({ :template => "categories/index" })
   end
 

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  #get("/", { :controller => "follow_requests", :action => "index" })
+
   # Routes for the Follow request resource:
 
   # CREATE
@@ -104,7 +106,7 @@ Rails.application.routes.draw do
   # READ
   get("/categories", { :controller => "categories", :action => "index" })
   
-  get("/categories/:path_id", { :controller => "categories", :action => "show" })
+  get("/categories/:city", { :controller => "categories", :action => "show" })
   
   # UPDATE
   
