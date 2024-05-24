@@ -102,6 +102,12 @@ class PlacesController < ApplicationController
     @chosen_city = params.fetch("city")
     @chosen_category = params.fetch("category")
 
+    matching_categories = Category.where({ :name => @chosen_category})
+    @the_category = matching_categories.at(0)
+
+    @places_in_category = @the_category.places
+    @places_in_category_city = @places_in_category.where({ :city => @chosen_city})
+
     render({ :template => "places/visit" })
 
   end
