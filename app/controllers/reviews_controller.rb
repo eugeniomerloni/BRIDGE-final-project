@@ -1,14 +1,22 @@
 class ReviewsController < ApplicationController
   def index
-    matching_reviews = Review.all
 
-    @list_of_reviews = matching_reviews.order({ :created_at => :desc })
+    if current_user != nil 
 
-    @places_in_hometown = Place.where({ :city => current_user.hometown})
+      matching_reviews = Review.all
 
-    @place_names = Place.pluck(:name)
+      @list_of_reviews = matching_reviews.order({ :created_at => :desc })
 
-    render({ :template => "reviews/index" })
+      @places_in_hometown = Place.where({ :city => current_user.hometown})
+
+      @place_names = Place.pluck(:name)
+
+      render({ :template => "reviews/index" })
+
+    else
+
+      render({ :template => "reviews/index" })
+    end
   end
 
   def show
